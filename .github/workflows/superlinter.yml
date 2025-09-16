@@ -1,21 +1,13 @@
-name: Super-Linter Demo
+name: Hello Demo
 
 on: [push, pull_request]
 
 jobs:
-  lint:
+  say-hello:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      statuses: write
-      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run Super-Linter
-        uses: super-linter/super-linter@v6
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BRANCH: main
-          VALIDATE_ALL_CODEBASE: false   # safe default for empty repos
+      - name: Say hello
+        run: echo "Hello, world! GitHub Actions is working 🚀"
