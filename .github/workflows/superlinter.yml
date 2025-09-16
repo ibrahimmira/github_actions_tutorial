@@ -1,17 +1,23 @@
 name: Super-Linter
 
-on: push
+on:
+  push:
+  pull_request:
 
 jobs:
   super-lint:
     name: Lint code base
     runs-on: ubuntu-latest
+    permissions:
+      contents: read        # needed by checkout
+      pull-requests: write  # so Super-Linter can annotate PRs
     steps:
-      - name: Checkout code 
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Run Super-Linter
-        uses: github/super-linter@v6
+        uses: super-linter/super-linter@v6
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main
-          GITHUB_ TOKEN: ${( secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: false   # lint only changed files on PRs
